@@ -26,8 +26,8 @@ export default function ImagePreview({fileInfo, canDownloadFiles}: Props) {
     let fileUrl: string;
     let previewUrl: string;
     if (isExternalFile) {
-        fileUrl = fileInfo.link;
-        previewUrl = fileInfo.link;
+        fileUrl = fileInfo.link || '';
+        previewUrl = fileInfo.link || '';
     } else {
         fileUrl = getFileDownloadUrl(fileInfo.id);
         previewUrl = fileInfo.has_preview_image ? getFilePreviewUrl(fileInfo.id) : fileUrl;

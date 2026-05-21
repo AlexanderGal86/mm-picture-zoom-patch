@@ -25,7 +25,7 @@ const mockPanzoomInstance = {
     destroy: jest.fn(),
 };
 
-(Panzoom as jest.Mock).mockReturnValue(mockPanzoomInstance);
+(Panzoom as unknown as jest.Mock).mockReturnValue(mockPanzoomInstance);
 
 describe('ImagePreview', () => {
     let container: HTMLDivElement;
