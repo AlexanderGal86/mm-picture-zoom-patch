@@ -6,10 +6,10 @@ import React from 'react';
 import {render, unmountComponentAtNode} from 'react-dom';
 import {act} from 'react-dom/test-utils';
 
+import {getFilePreviewUrl, getFileDownloadUrl} from 'mattermost-redux/utils/file_utils';
+
 import ImagePreview from 'components/file_preview_modal/image_preview';
 
-import {getFilePreviewUrl, getFileDownloadUrl} from 'mattermost-redux/utils/file_utils';
-import {FileTypes} from 'utils/constants';
 import {getFileType} from 'utils/utils';
 
 jest.mock('@panzoom/panzoom');
@@ -45,8 +45,8 @@ describe('ImagePreview', () => {
         container = document.createElement('div');
         document.body.appendChild(container);
         jest.clearAllMocks();
-        (getFilePreviewUrl as jest.Mock).mockReturnValue('/api/v4/files/file123/preview');
-        (getFileDownloadUrl as jest.Mock).mockReturnValue('/api/v4/files/file123/download');
+        (getFilePreviewUrl as jest.Mock).mockImplementation((id: string) => `/api/v4/files/${id}/preview`);
+        (getFileDownloadUrl as jest.Mock).mockImplementation((id: string) => `/api/v4/files/${id}/download`);
         (getFileType as jest.Mock).mockReturnValue('image');
     });
 
@@ -249,7 +249,10 @@ describe('ImagePreview', () => {
 
         act(() => {
             render(
-                <ImagePreview fileInfo={baseFileInfo as any} canDownloadFiles={true}/>,
+                <ImagePreview
+                    fileInfo={baseFileInfo as any}
+                    canDownloadFiles={true}
+                />,
                 container,
             );
         });
@@ -257,7 +260,10 @@ describe('ImagePreview', () => {
         for (let i = 0; i < 3; i++) {
             act(() => {
                 render(
-                    <ImagePreview fileInfo={{...baseFileInfo, id: `file${i}`} as any} canDownloadFiles={true}/>,
+                    <ImagePreview
+                        fileInfo={{...baseFileInfo, id: `file${i}`} as any}
+                        canDownloadFiles={true}
+                    />,
                     container,
                 );
             });
@@ -270,7 +276,10 @@ describe('ImagePreview', () => {
     test('11. Параметры Panzoom: maxScale=5, contain="outside", minScale=1', () => {
         act(() => {
             render(
-                <ImagePreview fileInfo={baseFileInfo as any} canDownloadFiles={true}/>,
+                <ImagePreview
+                    fileInfo={baseFileInfo as any}
+                    canDownloadFiles={true}
+                />,
                 container,
             );
         });
@@ -289,7 +298,10 @@ describe('ImagePreview', () => {
 
         act(() => {
             render(
-                <ImagePreview fileInfo={baseFileInfo as any} canDownloadFiles={true}/>,
+                <ImagePreview
+                    fileInfo={baseFileInfo as any}
+                    canDownloadFiles={true}
+                />,
                 container,
             );
         });
@@ -309,7 +321,10 @@ describe('ImagePreview', () => {
 
         act(() => {
             render(
-                <ImagePreview fileInfo={svgInfo as any} canDownloadFiles={true}/>,
+                <ImagePreview
+                    fileInfo={svgInfo as any}
+                    canDownloadFiles={true}
+                />,
                 container,
             );
         });
@@ -324,7 +339,10 @@ describe('ImagePreview', () => {
 
         act(() => {
             render(
-                <ImagePreview fileInfo={baseFileInfo as any} canDownloadFiles={true}/>,
+                <ImagePreview
+                    fileInfo={baseFileInfo as any}
+                    canDownloadFiles={true}
+                />,
                 container,
             );
             unmountComponentAtNode(container);
@@ -337,7 +355,10 @@ describe('ImagePreview', () => {
     test('15. getFilePreviewUrl/getFileDownloadUrl вызываются для обычного файла', () => {
         act(() => {
             render(
-                <ImagePreview fileInfo={baseFileInfo as any} canDownloadFiles={true}/>,
+                <ImagePreview
+                    fileInfo={baseFileInfo as any}
+                    canDownloadFiles={true}
+                />,
                 container,
             );
         });
@@ -354,7 +375,10 @@ describe('ImagePreview', () => {
 
         act(() => {
             render(
-                <ImagePreview fileInfo={noPreviewInfo as any} canDownloadFiles={true}/>,
+                <ImagePreview
+                    fileInfo={noPreviewInfo as any}
+                    canDownloadFiles={true}
+                />,
                 container,
             );
         });
@@ -366,7 +390,10 @@ describe('ImagePreview', () => {
     test('17. canDownloadFiles=true рендерит div.image_preview с img', () => {
         act(() => {
             render(
-                <ImagePreview fileInfo={baseFileInfo as any} canDownloadFiles={true}/>,
+                <ImagePreview
+                    fileInfo={baseFileInfo as any}
+                    canDownloadFiles={true}
+                />,
                 container,
             );
         });
@@ -378,7 +405,10 @@ describe('ImagePreview', () => {
     test('18. Не-SVG файлы не имеют SVG стилей', () => {
         act(() => {
             render(
-                <ImagePreview fileInfo={baseFileInfo as any} canDownloadFiles={true}/>,
+                <ImagePreview
+                    fileInfo={baseFileInfo as any}
+                    canDownloadFiles={true}
+                />,
                 container,
             );
         });
