@@ -22,6 +22,11 @@ cp "$PATCH_DIR/modified-files/image_preview.tsx" \
 cp "$PATCH_DIR/modified-files/image_preview.scss" \
    "$MM_DIR/webapp/channels/src/components/file_preview_modal/image_preview.scss"
 
+echo "Copying unit tests..."
+mkdir -p "$MM_DIR/webapp/channels/src/__tests__"
+cp "$PATCH_DIR/src/__tests__/image_preview.test.tsx" \
+   "$MM_DIR/webapp/channels/src/__tests__/image_preview.test.tsx"
+
 echo "Adding @panzoom/panzoom dependency..."
 cd "$MM_DIR/webapp"
 npm add @panzoom/panzoom --workspace=channels
