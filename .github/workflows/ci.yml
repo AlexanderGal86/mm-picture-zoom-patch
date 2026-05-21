@@ -26,11 +26,11 @@ jobs:
         working-directory: .mm-source/webapp
         run: |
           npm ci
-          npm run lint --workspace=channels
+          npm run check:eslint --workspace=channels
 
       - name: Type check
         working-directory: .mm-source/webapp
-        run: npm run typecheck --workspace=channels
+        run: npm run check-types --workspace=channels
 
   test:
     runs-on: ubuntu-22.04
@@ -52,7 +52,7 @@ jobs:
 
       - name: Unit tests
         working-directory: .mm-source/webapp
-        run: npx jest --config channels/jest.config.js src/__tests__/image_preview.test.tsx
+        run: npm run test -w=channels -- src/__tests__/image_preview.test.tsx
 
   docker-build-and-push:
     if: github.ref == 'refs/heads/main'

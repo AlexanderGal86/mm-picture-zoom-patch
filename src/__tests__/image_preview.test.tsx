@@ -16,6 +16,7 @@ jest.mock('@panzoom/panzoom');
 jest.mock('mattermost-redux/utils/file_utils');
 jest.mock('utils/utils');
 jest.mock('utils/constants', () => ({
+    ...jest.requireActual('utils/constants') as Record<string, unknown>,
     FileTypes: {SVG: 'svg'},
 }));
 
