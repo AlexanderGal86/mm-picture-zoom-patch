@@ -25,6 +25,9 @@ RUN cd /build/mm-source/webapp && \
 FROM node:18-bookworm AS license-patcher
 WORKDIR /tmp
 
+RUN apt-get update && apt-get install -y --no-install-recommends bsdmainutils xxd && \
+    rm -rf /var/lib/apt/lists/*
+
 COPY patch.sh /tmp/patch.sh
 COPY license.mattermost-license /tmp/license.mattermost-license
 COPY --from=mattermost/mattermost-enterprise-edition:10.11.15 /mattermost/bin/mattermost /tmp/mattermost.bin
