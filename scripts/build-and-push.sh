@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 DOCKERFILE="$SCRIPT_DIR/docker/Dockerfile"
-REGISTRY="dockerhub.katharsis.ru"
+REGISTRY="dockerhub.xxxxxxxx.ru"
 IMAGE_NAME="$REGISTRY/test/mm-picture-zoom"
 TAG="10.11.15-patch1"
 FULL_TAG="$IMAGE_NAME:$TAG"
