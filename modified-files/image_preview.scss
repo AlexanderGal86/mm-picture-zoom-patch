@@ -1,0 +1,25 @@
+.image_preview {
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    max-height: calc(100vh - 168px);
+    touch-action: none;
+
+    &__image {
+        max-width: 100%;
+        max-height: calc(100vh - 168px);
+        border-radius: 8px;
+        cursor: grab;
+        user-select: none;
+
+        &:active {
+            cursor: grabbing;
+        }
+
+        @media screen and (max-width: 768px) {
+            border-radius: 0;
+        }
+    }
+}

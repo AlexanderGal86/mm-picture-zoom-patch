@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.mm-source/
+.tmp/
+*.log
+.DS_Store
+config.json
+*.mattermost-license
+!license.mattermost-license
