@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends git ca-certific
 
 COPY modified-files/ /build/modified-files/
 COPY scripts/ /build/scripts/
+COPY src/ /build/src/
 
 RUN git clone --depth=1 --branch=v10.11.15 https://github.com/mattermost/mattermost.git /build/mm-source
 
