@@ -246,6 +246,7 @@ describe('ImagePreview', () => {
 
     test('10. Множественные ре-рендеры без ошибок', () => {
         const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+        const ids = ['file0', 'file1', 'file2'];
 
         act(() => {
             render(
@@ -257,17 +258,17 @@ describe('ImagePreview', () => {
             );
         });
 
-        for (let i = 0; i < 3; i++) {
+        ids.forEach((id) => {
             act(() => {
                 render(
                     <ImagePreview
-                        fileInfo={{...baseFileInfo, id: `file${i}`} as any}
+                        fileInfo={{...baseFileInfo, id} as any}
                         canDownloadFiles={true}
                     />,
                     container,
                 );
             });
-        }
+        });
 
         expect(errorSpy).not.toHaveBeenCalled();
         errorSpy.mockRestore();

@@ -1,10 +1,12 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
+import Panzoom from '@panzoom/panzoom';
 import React, {useEffect, useRef} from 'react';
 import type {FileInfo} from '@mattermost/types/files';
-import Panzoom from '@panzoom/panzoom';
+
 import {getFilePreviewUrl, getFileDownloadUrl} from 'mattermost-redux/utils/file_utils';
+
 import {FileTypes} from 'utils/constants';
 import {getFileType} from 'utils/utils';
 
@@ -36,6 +38,7 @@ export default function ImagePreview({fileInfo, canDownloadFiles}: Props) {
             return undefined;
         }
 
+        // eslint-disable-next-line new-cap
         const panzoom = Panzoom(image, {
             minScale: 1,
             maxScale: 5,
