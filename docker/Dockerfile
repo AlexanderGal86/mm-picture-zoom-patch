@@ -8,7 +8,6 @@ WORKDIR /build
 RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
-COPY patches/ /build/patches/
 COPY modified-files/ /build/modified-files/
 COPY scripts/ /build/scripts/
 

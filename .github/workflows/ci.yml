@@ -55,7 +55,7 @@ jobs:
         run: npm run test -w=channels -- src/__tests__/image_preview.test.tsx
 
   docker-build-and-push:
-    if: github.ref == 'refs/heads/main'
+    if: false
     needs: [validate, test]
     runs-on: ubuntu-22.04
     steps:

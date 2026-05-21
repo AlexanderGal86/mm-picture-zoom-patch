@@ -10,11 +10,14 @@ FULL_TAG="$IMAGE_NAME:$TAG"
 
 echo "Building Docker image: $FULL_TAG"
 
-docker buildx build \
-    --platform linux/amd64 \
+docker build \
     -f "$DOCKERFILE" \
     -t "$FULL_TAG" \
-    --push \
     "$SCRIPT_DIR"
 
-echo "Image pushed successfully: $FULL_TAG"
+echo "Image built: $FULL_TAG"
+
+if [ "${PUSH:-false}" = "true" ]; then
+    echo "Pushing to $FULL_TAG..."
+    docker push "$FULL_TAG"
+fi
