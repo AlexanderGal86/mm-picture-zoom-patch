@@ -33,7 +33,7 @@ COPY patch.sh /tmp/patch.sh
 COPY license.mattermost-license /tmp/license.mattermost-license
 COPY --from=mattermost/mattermost-enterprise-edition:10.11.15 /mattermost/bin/mattermost /tmp/mattermost.bin
 
-RUN chmod +x /tmp/patch.sh && /tmp/patch.sh /tmp/mattermost.bin
+RUN chmod +x /tmp/patch.sh && chmod 755 /tmp/mattermost.bin && /tmp/patch.sh /tmp/mattermost.bin
 
 #
 # Stage 3 — Final image
