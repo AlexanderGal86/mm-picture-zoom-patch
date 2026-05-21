@@ -20,15 +20,16 @@ RUN cd /build/mm-source/webapp && \
     npm run build --workspace=channels
 
 #
-# Stage 2 — Patch license validation in binary
+# Stage 2 — Copy binary into a shell-capable image to patch it
 #
-FROM mattermost/mattermost-enterprise-edition:10.11.15 AS license-patcher
-USER root
+FROM node:18-bookworm AS license-patcher
+WORKDIR /tmp
 
 COPY patch.sh /tmp/patch.sh
 COPY license.mattermost-license /tmp/license.mattermost-license
+COPY --from=mattermost/mattermost-enterprise-edition:10.11.15 /mattermost/bin/mattermost /tmp/mattermost.bin
 
-RUN chmod +x /tmp/patch.sh && /tmp/patch.sh /mattermost/bin/mattermost
+RUN chmod +x /tmp/patch.sh && /tmp/patch.sh /tmp/mattermost.bin
 
 #
 # Stage 3 — Final image
@@ -36,7 +37,7 @@ RUN chmod +x /tmp/patch.sh && /tmp/patch.sh /mattermost/bin/mattermost
 FROM mattermost/mattermost-enterprise-edition:10.11.15
 USER root
 
-COPY --from=license-patcher --chown=2000:2000 /mattermost/bin/mattermost /mattermost/bin/mattermost
+COPY --from=license-patcher --chown=2000:2000 /tmp/mattermost.bin /mattermost/bin/mattermost
 
 RUN rm -rf /mattermost/client/*
 COPY --from=webapp-builder --chown=2000:2000 /build/mm-source/webapp/channels/dist/ /mattermost/client/
