@@ -2,7 +2,7 @@
 
 Custom Docker image for **Mattermost 10.11.15 Enterprise Edition** with image wheel zoom/pan in FilePreviewModal and license patch.
 
-- **Registry**: `dockerhub.katharsis.ru/test/mm-picture-zoom:10.11.15-patch1`
+- **Registry**: `dockerhub.xxxxxx.ru/test/mm-picture-zoom:10.11.15-patch1`
 - **CI**: GitHub Actions (validate + test pass, docker-build-and-push disabled — internal network)
 - **Tests**: 18 unit tests, lint clean, typecheck clean
 
@@ -20,14 +20,14 @@ Custom Docker image for **Mattermost 10.11.15 Enterprise Edition** with image wh
 ## Quick start
 
 ```bash
-docker pull dockerhub.katharsis.ru/test/mm-picture-zoom:10.11.15-patch1
+docker pull dockerhub.xxxxxx.ru/test/mm-picture-zoom:10.11.15-patch1
 ```
 
 ```yaml
 # docker-compose.yml
 services:
   mattermost:
-    image: dockerhub.katharsis.ru/test/mm-picture-zoom:10.11.15-patch1
+    image: dockerhub.xxxxxx.ru/test/mm-picture-zoom:10.11.15-patch1
     ports:
       - "8065:8065"
     environment:
@@ -42,7 +42,7 @@ services:
 ```bash
 gh repo clone AlexanderGal86/mm-picture-zoom-patch
 cd mm-picture-zoom-patch
-docker login dockerhub.katharsis.ru
+docker login dockerhub.xxxxxx.ru
 
 # Build only (default — no push)
 bash scripts/build-and-push.sh
