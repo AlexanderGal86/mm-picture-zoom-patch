@@ -1,6 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
+// eslint-disable-next-line import/order
 import Panzoom from '@panzoom/panzoom';
 import React, {useEffect, useRef} from 'react';
 import type {FileInfo} from '@mattermost/types/files';
