@@ -21,9 +21,10 @@ RUN cd /build/mm-source/webapp && \
     npm run build --workspace=channels
 
 #
-# Stage 2 — Copy binary into a shell-capable image to patch it
+# Stage 2 — Copy binary into a shell-capable image to patch it and prepare
+# an empty client directory
 #
-FROM node:18-bookworm AS license-patcher
+FROM node:18-bookworm AS patcher
 WORKDIR /tmp
 
 RUN apt-get update && apt-get install -y --no-install-recommends bsdmainutils xxd && \
@@ -33,18 +34,35 @@ COPY patch.sh /tmp/patch.sh
 COPY license.mattermost-license /tmp/license.mattermost-license
 COPY --from=mattermost/mattermost-enterprise-edition:10.11.15 /mattermost/bin/mattermost /tmp/mattermost.bin
 
-RUN chmod +x /tmp/patch.sh && chmod 755 /tmp/mattermost.bin && /tmp/patch.sh /tmp/mattermost.bin
+RUN cp /tmp/mattermost.bin /tmp/mattermost.patched && \
+    chmod +x /tmp/patch.sh && \
+    /tmp/patch.sh /tmp/mattermost.patched && \
+    cp /tmp/mattermost.patched /tmp/mattermost.bin
 
 #
 # Stage 3 — Final image
 #
-FROM mattermost/mattermost-enterprise-edition:10.11.15
-USER root
+FROM scratch
 
-COPY --from=license-patcher --chown=2000:2000 /tmp/mattermost.bin /mattermost/bin/mattermost
+# Copy entire enterprise image, then overlay our modifications
+COPY --from=mattermost/mattermost-enterprise-edition:10.11.15 / /
 
-RUN rm -rf /mattermost/client/*
+COPY --from=patcher --chown=2000:2000 /tmp/mattermost.bin /mattermost/bin/mattermost
 COPY --from=webapp-builder --chown=2000:2000 /build/mm-source/webapp/channels/dist/ /mattermost/client/
 COPY license.mattermost-license /mattermost/config/license.mattermost-license
 
 USER mattermost
+WORKDIR /mattermost
+
+ENV PATH=/mattermost/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+    SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt \
+    MM_SERVICESETTINGS_ENABLELOCALMODE=true
+
+EXPOSE 8065/tcp 8067/tcp 8074/tcp 8075/tcp
+
+VOLUME ["/mattermost/client/plugins", "/mattermost/config", "/mattermost/data", "/mattermost/logs", "/mattermost/plugins"]
+
+HEALTHCHECK --interval=30s --timeout=10s \
+  CMD ["/mattermost/bin/mmctl", "system", "status", "--local"]
+
+CMD ["/mattermost/bin/mattermost"]
