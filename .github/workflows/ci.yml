@@ -3,7 +3,7 @@ name: CI
 on: [push, pull_request]
 
 env:
-  REGISTRY: dockerhub.katharsis.ru
+  REGISTRY: dockerhub.xxxxxxx.ru
   IMAGE_NAME: test/mm-picture-zoom
   TAG: 10.11.15-patch1
 
