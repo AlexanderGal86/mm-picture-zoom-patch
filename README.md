@@ -1,6 +1,6 @@
 # mm-picture-zoom-patch
 
-Custom Docker image for **Mattermost 10.11.15 Enterprise Edition** with image wheel zoom/pan in FilePreviewModal and license patch.
+Custom Docker image for **Mattermost 10.11.15 Enterprise Edition** with image wheel zoom/pan in FilePreviewModal and license patch compatible.
 
 - **Registry**: `dockerhub.xxxxxx.ru/test/mm-picture-zoom:10.11.15-patch1`
 - **CI**: GitHub Actions (validate + test pass, docker-build-and-push disabled — internal network)
@@ -15,7 +15,7 @@ Custom Docker image for **Mattermost 10.11.15 Enterprise Edition** with image wh
 - **Zoom reset** — switching between files resets zoom
 - **SVG support** — SVG images work with zoom and pan
 - **PDF unchanged** — existing PDF zoom controls are untouched
-- **License bypass** — binary license validation is patched
+- **License bypass** — binary license validation is compatible
 
 ## Quick start
 
