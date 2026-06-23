@@ -1,6 +1,6 @@
 # mm-picture-zoom-patch
 
-Custom Docker image for **Mattermost 10.11.15 Enterprise Edition** with image wheel zoom/pan in FilePreviewModal and license patch compatible.
+Custom Docker image for **Mattermost 10.11.15 Enterprise Edition** with image wheel zoom/pan in FilePreviewModal.
 
 - **Registry**: `dockerhub.xxxxxx.ru/test/mm-picture-zoom:10.11.15-patch1`
 - **CI**: GitHub Actions (validate + test pass, docker-build-and-push disabled — internal network)
